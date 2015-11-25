@@ -1,0 +1,105 @@
+<html>
+<head>
+	<script src="jquery-1.11.2.js"></script>
+	<title></title>
+<script type="text/javascript">
+	function deck(){
+		var reset = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,4-7,48,49,50,51,52];
+		deck.prototype.total = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52];
+		deck.prototype.shuffle = function(deck){
+			var counter = deck.length, temp, index;
+			while (counter > 0)
+			{
+				index = Math.floor(Math.random()*counter);
+				counter--;
+
+				temp = deck[counter];
+				deck[counter] = deck[index];
+				deck[index] = temp;
+			}
+			$('#name').html('');
+			$('#dealer').attr('src','');
+			$('#card0').attr('src','');
+			$('#card1').attr('src','');
+			$('#card2').attr('src','');
+			$('#card3').attr('src','');
+			$('#card4').attr('src','');
+			return deck;
+		}
+		deck.prototype.reset = function(deck){
+			deck = reset;
+			$('#name').html('');
+			$('#dealer').attr('src','');
+			$('#card0').attr('src','');
+			$('#card1').attr('src','');
+			$('#card2').attr('src','');
+			$('#card3').attr('src','');
+			$('#card4').attr('src','');
+			console.log(deck);
+		}
+		deck.prototype.deal = function(deck,playerhand){
+			if (playerhand.length == 5){
+			$('#name').html('');
+			$('#dealer').attr('src','');
+			$('#card0').attr('src','');
+			$('#card1').attr('src','');
+			$('#card2').attr('src','');
+			$('#card3').attr('src','');
+			$('#card4').attr('src','');
+				return "Cannot deal more cards";
+			}
+			else{
+				var i= deck.length - 1;
+				var temp = deck[i];
+				playerhand.push(temp);
+				deck.pop();
+				$('#dealer').attr('src','png/' + temp + '.png')
+				$('#name').html('Dealer dealt:');
+			}
+		}
+	}
+	var cards = new deck;
+	function player(name){
+		this.name = name;
+		this.hand = [];
+		this.showhand = function(){
+		if (this.hand[0] != undefined){
+			$('#name').html(this.name +"'s" +' ' +'hand');
+			$('#dealer').attr('src','');
+			for(i=0;i<this.hand.length;i++){
+				$('#card'+i).attr('src','png/' + this.hand[i] + '.png');
+				}
+			}
+		else{
+			return "Hand is empty";
+		}
+		}
+		player.prototype.discard = function(){
+			$('#name').html('');
+			$('#dealer').attr('src','');
+			$('#card0').attr('src','');
+			$('#card1').attr('src','');
+			$('#card2').attr('src','');
+			$('#card3').attr('src','');
+			$('#card4').attr('src','');
+			this.hand.pop();
+			return this.hand;
+		}
+	}
+	var john = new player('john');
+</script>
+</head>
+<body>
+	<div id ="container">
+		<h2 id="name"></h2>
+		<p id="card">
+			<img src="" id="dealer">
+			<img src="" id="card0">
+			<img src="" id="card1">
+			<img src="" id="card2">
+			<img src="" id="card3">
+			<img src="" id="card4">
+		</p>
+	</div>
+</body>
+</html>
